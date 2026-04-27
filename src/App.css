@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #0a1628;
+  font-family: 'Courier New', Courier, monospace;
+  color: #f0f8ff;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+@keyframes star-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes fleur-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.5)); }
+  50% { filter: drop-shadow(0 0 22px rgba(255,215,0,0.9)) drop-shadow(0 0 40px rgba(255,215,0,0.4)); }
+}
+
+@keyframes text-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes hymn-line-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

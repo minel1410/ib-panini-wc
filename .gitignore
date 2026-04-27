@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env & secrets
+.env
+.env*.local
+
+# os
+.DS_Store
+Thumbs.db
+
+# ide
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# logs
+*.log*
+
+# db (local dev)
+panini.db*
+
+# misc
+.remember/
+*.tsbuildinfo
+next-env.d.ts
