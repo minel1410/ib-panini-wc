@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { Nav } from '@/components/Nav';
 import { UserSetup } from '@/components/UserSetup';
 import { useUser } from '@/hooks/useUser';
-import { MyAlbum } from '@/pages/MyAlbum';
-import { Duplicates } from '@/pages/Duplicates';
-import { Matches } from '@/pages/Matches';
-import { StickerLookup } from '@/pages/StickerLookup';
-import { Leaderboard } from '@/pages/Leaderboard';
-import { Admin } from '@/pages/Admin';
+import { MyAlbum } from '@/views/MyAlbum';
+import { Duplicates } from '@/views/Duplicates';
+import { Matches } from '@/views/Matches';
+import { StickerLookup } from '@/views/StickerLookup';
+import { Leaderboard } from '@/views/Leaderboard';
+import { Admin } from '@/views/Admin';
 
 type Route = 'album' | 'duplicates' | 'matches' | 'lookup' | 'leaderboard' | 'admin';
 
