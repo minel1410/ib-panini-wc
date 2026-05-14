@@ -52,3 +52,18 @@ export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
 export async function deleteUser(userId: string): Promise<void> {
   await fetch(`/api/users/${userId}`, { method: 'DELETE' });
 }
+
+export interface BulkAddResult {
+  added: Array<{ stickerId: string; newQuantity: number }>;
+  duplicates: Array<{ stickerId: string; previousQuantity: number; newQuantity: number; count: number }>;
+}
+
+export async function bulkAddStickers(userId: string, stickers: string[]): Promise<BulkAddResult> {
+  const res = await fetch(`/api/stickers/${userId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ stickers }),
+  });
+  if (!res.ok) throw new Error('Bulk add failed');
+  return res.json();
+}

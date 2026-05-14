@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { StickerCard } from '../components/StickerCard';
+import { BulkAddModal } from '../components/BulkAddModal';
 import { useStickers } from '../hooks/useStickers';
 import { COUNTRIES, ALL_STICKER_IDS, TOTAL_STICKERS } from '../lib/stickerIds';
 
@@ -22,9 +23,10 @@ const GROUPS = [
 const ID_SET = new Set(ALL_STICKER_IDS);
 
 export function MyAlbum({ userId }: Props) {
-  const { stickerMap, loading, increment, decrement, stats } = useStickers(userId);
+  const { stickerMap, loading, increment, decrement, bulkAdd, stats } = useStickers(userId);
   const [search, setSearch] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [bulkModalOpen, setBulkModalOpen] = useState(false);
 
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.toUpperCase();
@@ -56,6 +58,7 @@ export function MyAlbum({ userId }: Props) {
   }
 
   return (
+    <>
     <div style={{ display: 'flex', gap: 28, padding: '24px 28px', fontFamily: MONO, alignItems: 'flex-start' }}>
 
       {/* Right — sticky photo */}
@@ -148,6 +151,29 @@ export function MyAlbum({ userId }: Props) {
           Left click <strong style={{ color: '#4ade80' }}>+1</strong> · Right click <strong style={{ color: '#f87171' }}>−1</strong>
         </span>
 
+        <button
+          onClick={() => setBulkModalOpen(true)}
+          style={{
+            padding: '10px 18px',
+            fontSize: 12,
+            fontFamily: MONO,
+            background: '#ffd700',
+            border: 'none',
+            borderRadius: 4,
+            color: '#071220',
+            cursor: 'pointer',
+            fontWeight: 700,
+            letterSpacing: 1,
+            textTransform: 'uppercase',
+            boxShadow: '0 0 12px rgba(255,215,0,0.3)',
+            transition: 'all 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 20px rgba(255,215,0,0.5)'; }}
+          onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 0 12px rgba(255,215,0,0.3)'; }}
+        >
+          Bulk Add
+        </button>
+
         {/* Legend */}
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 20, alignItems: 'center' }}>
           {[
@@ -209,5 +235,13 @@ export function MyAlbum({ userId }: Props) {
       </div>
       </div>{/* end left column */}
     </div>
+
+    {bulkModalOpen && (
+      <BulkAddModal
+        onClose={() => setBulkModalOpen(false)}
+        onBulkAdd={bulkAdd}
+      />
+    )}
+    </>
   );
 }

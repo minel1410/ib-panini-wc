@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { getMyStickers, updateSticker } from '../api';
+import { getMyStickers, updateSticker, bulkAddStickers, type BulkAddResult } from '../api';
 import { TOTAL_STICKERS } from '../lib/stickerIds';
 import type { StickerRow } from '../types';
 
@@ -64,6 +64,22 @@ export function useStickers(userId: string | null) {
     [stickerMap, setQuantity]
   );
 
+  const bulkAdd = useCallback(
+    async (stickers: string[]): Promise<BulkAddResult> => {
+      if (!userId) return { added: [], duplicates: [] };
+      const result = await bulkAddStickers(userId, stickers);
+      setStickerMap(prev => {
+        const next = new Map(prev);
+        for (const { stickerId, newQuantity } of [...result.added, ...result.duplicates]) {
+          next.set(stickerId, newQuantity);
+        }
+        return next;
+      });
+      return result;
+    },
+    [userId]
+  );
+
   const stats = {
     collected: stickerMap.size,
     total: TOTAL_STICKERS,
@@ -71,5 +87,5 @@ export function useStickers(userId: string | null) {
     duplicates: [...stickerMap.values()].filter(q => q > 1).reduce((acc, q) => acc + (q - 1), 0),
   };
 
-  return { stickerMap, loading, increment, decrement, stats };
+  return { stickerMap, loading, increment, decrement, bulkAdd, stats };
 }
